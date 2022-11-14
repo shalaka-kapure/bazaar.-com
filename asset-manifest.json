@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/bazaar.-com/static/js/main.e0591d62.chunk.js",
-    "main.js.map": "/bazaar.-com/static/js/main.e0591d62.chunk.js.map",
-    "runtime-main.js": "/bazaar.-com/static/js/runtime-main.ca8d7577.js",
-    "runtime-main.js.map": "/bazaar.-com/static/js/runtime-main.ca8d7577.js.map",
-    "static/js/2.2105360a.chunk.js": "/bazaar.-com/static/js/2.2105360a.chunk.js",
-    "static/js/2.2105360a.chunk.js.map": "/bazaar.-com/static/js/2.2105360a.chunk.js.map",
-    "index.html": "/bazaar.-com/index.html",
-    "static/js/2.2105360a.chunk.js.LICENSE.txt": "/bazaar.-com/static/js/2.2105360a.chunk.js.LICENSE.txt",
-    "static/media/payment.a8f62ba1.jpeg": "/bazaar.-com/static/media/payment.a8f62ba1.jpeg"
+    "main.js": "/bazaar.com/static/js/main.356bd463.chunk.js",
+    "main.js.map": "/bazaar.com/static/js/main.356bd463.chunk.js.map",
+    "runtime-main.js": "/bazaar.com/static/js/runtime-main.502c1e1b.js",
+    "runtime-main.js.map": "/bazaar.com/static/js/runtime-main.502c1e1b.js.map",
+    "static/js/2.92ee444c.chunk.js": "/bazaar.com/static/js/2.92ee444c.chunk.js",
+    "static/js/2.92ee444c.chunk.js.map": "/bazaar.com/static/js/2.92ee444c.chunk.js.map",
+    "index.html": "/bazaar.com/index.html",
+    "static/js/2.92ee444c.chunk.js.LICENSE.txt": "/bazaar.com/static/js/2.92ee444c.chunk.js.LICENSE.txt",
+    "static/media/payment.a8f62ba1.jpeg": "/bazaar.com/static/media/payment.a8f62ba1.jpeg"
   },
   "entrypoints": [
-    "static/js/runtime-main.ca8d7577.js",
-    "static/js/2.2105360a.chunk.js",
-    "static/js/main.e0591d62.chunk.js"
+    "static/js/runtime-main.502c1e1b.js",
+    "static/js/2.92ee444c.chunk.js",
+    "static/js/main.356bd463.chunk.js"
   ]
 }
