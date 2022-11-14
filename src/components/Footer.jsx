@@ -8,7 +8,7 @@ import {
   Twitter,
 } from "@material-ui/icons";
 import styled from "styled-components";
-import payment from "../payment.jpeg"
+import payment from "../payment.jpeg";
 
 const Container = styled.div`
   display: flex;

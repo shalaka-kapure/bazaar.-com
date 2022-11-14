@@ -74,7 +74,7 @@ const Register = () => {
   return (
     <>
       <TitleBar>
-      <Link to="/" style={linkStyle}>
+      <Link to="/bazaar.com" style={linkStyle}>
         <Logo>BAZAAR.</Logo>
       </Link>  
       </TitleBar>
