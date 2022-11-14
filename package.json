@@ -1,5 +1,5 @@
 {
-  "homepage":"http://shalaka-kapure.github.io/bazaar.-com",
+  "homepage": "http://shalaka-kapure.github.io/bazaar.com",
   "name": "new",
   "version": "0.1.0",
   "private": true,
@@ -20,8 +20,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy":"npm run build",
-    "deploy":"gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b master -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
