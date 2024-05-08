@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/productSlice";
-import Loader from "./Loader";
 import { Skeleton, Stack } from "@mui/material";
 
 const Container = styled.div`
@@ -98,7 +97,7 @@ const Slider = () => {
   useEffect(() => {
     dispatch(fetchProducts());
     console.log("data in slider", products);
-  }, []);
+  }, [dispatch, products]);
 
   const [slideindex, setSlideindex] = useState(0);
   const handleClick = (direction) => {

@@ -65,11 +65,6 @@ const FilterColor = styled.div`
   margin: 0px 5px 5px 0px;
   cursor: pointer;
 `;
-const FilterSize = styled.select`
-  margin-left: 10px;
-  padding: 5px;
-`;
-const FilterSizeOption = styled.option``;
 const AddContainer = styled.div`
   width: 50%;
   display: flex;
@@ -126,7 +121,7 @@ const SingleProduct = () => {
       }
     };
     fetchProducts();
-  }, []);
+  }, [id]);
 
   const handleAdd = (product) => {
     dispatch(add(product));

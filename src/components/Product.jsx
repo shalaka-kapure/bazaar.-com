@@ -67,11 +67,6 @@ const Icon = styled.div`
     transform: scale(1.1);
   }
 `;
-
-const ProductContainer = styled.div`
-display:flex;
-flex-direction: column;
-`;
 const ProductDetails = styled.div`
   bottom: 0px;
   text-align: center;

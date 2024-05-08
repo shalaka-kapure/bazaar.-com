@@ -26,10 +26,6 @@ const Info = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const Title = styled.h1`
-  color: black;
-  margin-bottom: 10px;
-`;
 const Button = styled.button`
   border: none;
   padding: 10px;
