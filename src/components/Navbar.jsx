@@ -1,9 +1,11 @@
-import { Badge } from "@mui/material"; 
+import { Badge } from "@mui/material";
 import { Search, ShoppingCartOutlined } from "@mui/icons-material";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchProducts, setSearchQuery } from "../store/productSlice";
 
 const Container = styled.div`
   height: 60px;
@@ -36,6 +38,7 @@ const SearchContainer = styled.div`
   align-items: center;
   margin-left: 25px;
   padding: 5px;
+  background-color: white;
 `;
 const Input = styled.input`
   border: none;
@@ -65,15 +68,56 @@ const linkStyle = {
 };
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const items = useSelector((state) => state.cart);
-  console.log("navabar items", items)
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate(); 
+  const { data: products } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+    console.log("data in navbar", products);
+    // eslint-disable-next-line
+  }, [dispatch]);
+
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearch(query);
+    dispatch(setSearchQuery(query));
+    console.log("query", query);
+  };
+  const handleSearchSubmit = () => {
+    const foundProduct = products.find(
+      (product) =>
+        product.title.toLowerCase().includes(search.toLowerCase()) ||
+        product.brand.toLowerCase().includes(search.toLowerCase()) ||
+        product.category.toLowerCase().includes(search.toLowerCase())
+    );
+
+    if (foundProduct) {
+      navigate(`/products/${foundProduct.category}`);
+    } else {
+      console.log("Product not found!");
+    }
+  };
+
+  console.log("navabar items", items);
   return (
     <Container>
       <Wrapper>
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input placeholder="Search" />
+            <Input
+              placeholder="Search"
+              value={search}
+              onChange={handleSearch}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearchSubmit();
+                }
+              }}
+            />
             <Search style={{ color: "gray", fontSize: "16px" }} />
           </SearchContainer>
         </Left>

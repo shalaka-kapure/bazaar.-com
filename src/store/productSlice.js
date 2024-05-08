@@ -10,9 +10,15 @@ export const productSlice = createSlice({
   name: "product",
   initialState: {
     data: [],
+    searchQuery: "", 
+    searchResults: [], 
     status: STATUSES.IDLE,
   },
-  reducers: {},
+  reducers: {
+    setSearchQuery: (state, action) => {
+      state.query = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state, action) => {
@@ -28,7 +34,7 @@ export const productSlice = createSlice({
   },
 });
 
-export const { setProducts, setStatus } = productSlice.actions;
+export const { setProducts, setStatus,setSearchQuery } = productSlice.actions;
 
 export default productSlice.reducer;
 

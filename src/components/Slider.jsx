@@ -93,11 +93,12 @@ const Slider = () => {
   const dispatch = useDispatch();
 
   const { data: products, status } = useSelector((state) => state.product);
-
+  
   useEffect(() => {
     dispatch(fetchProducts());
     console.log("data in slider", products);
-  }, [dispatch, products]);
+  // eslint-disable-next-line  
+  }, [dispatch]);
 
   const [slideindex, setSlideindex] = useState(0);
   const handleClick = (direction) => {

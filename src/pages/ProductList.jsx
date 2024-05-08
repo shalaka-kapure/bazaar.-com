@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import Products from "../components/Products";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 
-const Container = styled.div``;
+const Container = styled.div`
+  overflow-x: hidden;
+`;
 
 const Title = styled.h1`
   margin: 20px;
@@ -33,7 +32,6 @@ const Option = styled.option``;
 
 const ProductList = () => {
   const { category } = useParams();
-
   const location = useLocation();
   const cat = location.pathname.split("/")[2];
   const [filter, setFilters] = useState({});
@@ -45,21 +43,19 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        setTimeout(async () => {
-          const res = await fetch(
-            `https://fakestoreapi.in/api/products/category?type=${category}`
-          );
-          const data = await res.json();
-          console.log(data);
-          setProducts(data.products);
-          setLoading(false);
-        }, 2000);
+        const res = await fetch(
+          `https://fakestoreapi.in/api/products/category?type=${category}`
+        );
+        const data = await res.json();
+        setProducts(data.products);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
     fetchProducts();
   }, [category]);
+
   const handleFilters = (e) => {
     const value = e.target.value;
     setFilters({
@@ -67,10 +63,27 @@ const ProductList = () => {
       [e.target.name]: value,
     });
   };
+
+  const filteredProducts = products.filter((product) => {
+    // Filter based on selected color
+    if (filter.color && product.color !== filter.color) {
+      return false;
+    }
+    return true;
+  });
+
+  // Sort products based on selected option
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sort === "asc") {
+      return a.price - b.price;
+    } else if (sort === "desc") {
+      return b.price - a.price;
+    }
+    return 0; // Default sorting is newest
+  });
+
   return (
     <Container>
-      <Navbar />
-      <Announcement />
       <Title>
         Showing results for{" "}
         {category.charAt(0).toUpperCase() + category.slice(1)} category
@@ -79,20 +92,20 @@ const ProductList = () => {
         <Filter>
           <FilterText>Filter Products:</FilterText>
           <Select name="color" onChange={handleFilters}>
-            <Option disabled>Color</Option>
-            <Option>White</Option>
-            <Option>Black</Option>
-            <Option>Red</Option>
-            <Option>Yellow</Option>
-            <Option>Blue</Option>
-            <Option>Green</Option>
-            <Option>Pink</Option>
+            <Option disabled>Select Color</Option>
+            <Option value="White">White</Option>
+            <Option value="Black">Black</Option>
+            <Option value="Red">Red</Option>
+            <Option value="Yellow">Yellow</Option>
+            <Option value="Blue">Blue</Option>
+            <Option value="Green">Green</Option>
+            <Option value="Pink">Pink</Option>
           </Select>
         </Filter>
         <Filter>
           <FilterText>Sort Products:</FilterText>
           <Select onChange={(e) => setSort(e.target.value)}>
-            <Option value="newest">Newest</Option>
+            <Option value="newest">Relevant first</Option>
             <Option value="asc">Price (asc)</Option>
             <Option value="desc">Price (desc)</Option>
           </Select>
@@ -101,9 +114,8 @@ const ProductList = () => {
       {loading ? (
         <Loader />
       ) : (
-      <Products cat={cat} filter={filter} sort={sort} products={products} />
-    )}
-      <Footer />
+        <Products cat={cat} filter={filter} sort={sort} products={sortedProducts} />
+      )}
     </Container>
   );
 };

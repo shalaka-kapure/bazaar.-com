@@ -1,9 +1,8 @@
-import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import { Add, Remove } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { remove } from "../store/cartSlice";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -115,17 +114,17 @@ const Summary = styled.div`
   margin-top: 10px;
 `;
 const SummaryTitle = styled.h1`
-font-weight: 200;
-`
+  font-weight: 200;
+`;
 const SummaryItem = styled.div`
-margin: 30px 0;
-display: flex;
-justify-content: space-between;
-font-weight: ${props => props.type === "total" && "500"};
-font-size: ${props => props.type === "total" && "24px"};
-`
-const SummaryItemText = styled.span``
-const SummaryItemPrice = styled.span``
+  margin: 30px 0;
+  display: flex;
+  justify-content: space-between;
+  font-weight: ${(props) => props.type === "total" && "500"};
+  font-size: ${(props) => props.type === "total" && "24px"};
+`;
+const SummaryItemText = styled.span``;
+const SummaryItemPrice = styled.span``;
 const Button = styled.button`
   width: 100%;
   margin-top: 10px;
@@ -141,19 +140,30 @@ const Button = styled.button`
   }
 `;
 
+const linkStyle = {
+  textDecoration: "none",
+  color:"white"
+};
+
 const Cart = () => {
+  const dispatch = useDispatch();
   const items = useSelector((state) => state.cart);
 
-  console.log("cart items", items)
+  const subtotal = items.reduce((total, item) => total + item.price, 0);
+  console.log("cart items", items);
+
+  const handleRemove = (product) => {
+    dispatch(remove(product.id));
+  };
 
   return (
     <Container>
-      <Navbar />
-      <Announcement />
       <Wrapper>
         <Title>Shopping Cart</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <Link to="/" style={linkStyle}>
+            <TopButton>CONTINUE SHOPPING</TopButton>
+          </Link>
           <TopTexts>
             <TopText>Shopping Bag({items.length})</TopText>
             <TopText>Your Wishlist(4)</TopText>
@@ -164,60 +174,59 @@ const Cart = () => {
           <Info>
             {items.map((item, index) => (
               <>
-            <Product key={index}>
-            <ProductDetail>
-              <Image src={item.image} />
-              <Details>
-                <ProductName>
-                  <b>{item.title}</b>
-                </ProductName>
-                <ProductColor>
-                  <ProductColorName>
-                    <b>Color:</b>
-                  </ProductColorName>
-                  <ProductColorBox color={item.color}></ProductColorBox>
-                </ProductColor>
-                <ProductSize>
-                  <b>Model:</b> {item.model}
-                </ProductSize>
-              </Details>
-            </ProductDetail>
-            <PriceDetail>
-              <ProductAmountContainer>
-                <Add />
-                <ProductAmount>1</ProductAmount>
-                <Remove />
-              </ProductAmountContainer>
-              <ProductPrice>M.R.P.: ${item.price}</ProductPrice>
-            </PriceDetail>
-          </Product>
-            <Hr />
-            </>
+                <Product key={index}>
+                  <ProductDetail>
+                    <Image src={item.image} />
+                    <Details>
+                      <ProductName>
+                        <b>{item.title}</b>
+                      </ProductName>
+                      <ProductColor>
+                        <ProductColorName>
+                          <b>Color:</b>
+                        </ProductColorName>
+                        <ProductColorBox color={item.color}></ProductColorBox>
+                      </ProductColor>
+                      <ProductSize>
+                        <b>Model:</b> {item.model}
+                      </ProductSize>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <Add />
+                      <ProductAmount>1</ProductAmount>
+                      <Remove onClick={() => handleRemove(item)}/>
+                    </ProductAmountContainer>
+                    <ProductPrice>M.R.P.: ${item.price}</ProductPrice>
+                  </PriceDetail>
+                </Product>
+                <Hr />
+              </>
             ))}
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>Rs.90,800</SummaryItemPrice>
+              <SummaryItemPrice>${subtotal}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>Rs.80</SummaryItemPrice>
+              <SummaryItemPrice>$50</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>- Rs. 80</SummaryItemPrice>
+              <SummaryItemPrice>-$50</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>- Rs. 90,800</SummaryItemPrice>
+              <SummaryItemPrice>- ${subtotal}</SummaryItemPrice>
             </SummaryItem>
             <Button>Proceed to Buy</Button>
           </Summary>
         </Bottom>
       </Wrapper>
-      <Footer />
     </Container>
   );
 };
